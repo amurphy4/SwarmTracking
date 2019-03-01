@@ -4,13 +4,13 @@ Swarm robot tracking system - developed for use by the Swarm Lab at the Universi
 # Getting Started
 These instructions will show how to import this module and use this module
 
-### Prerequisites
-OpenCV 4.0 is required in order to identify the ArUco tags. ArUco detection a contrib module, and not included within base OpenCV
+## Prerequisites
+OpenCV 4.0 is required in order to identify the ArUco tags. ArUco detection is a contrib module, and not included within base OpenCV. OpenCV Contrib can be installed through pip
 ```
 pip install opencv-contrib-python
 ```
 
-### Installation
+## Installation
 Clone/download this repository to the folder containing your project code
 
 -OR-
@@ -21,8 +21,8 @@ export PYTHONPATH="${PYTHONPATH}:/path/to/this/repository"
 ```
 
 
-### Usage
-Import the TrackingController
+## Usage
+Import the `TrackingController`
 ```python
 from SwarmTracking import TrackingController
 ```
@@ -55,9 +55,9 @@ tc = TrackingController.getInstance()
 new_tc = TrackingController.getInstance()
 ```
 
-NOTE: Any changes made to `new_tc` will also affect `tc`
+**Note: Any changes made to `new_tc` will also affect `tc`**
 
-`TrackingController` requires a callback method in order to return data about the bots, this can be set using the `set_callback()` method
+`TrackingController` requires a callback method in order to return data about the bots, this can be set using the `set_callback()` method. The callback will receive a list of the [bots](objects/bot.py) found in the frame
 ```python
 def callback(bots):
   # Handle data processing here
@@ -68,7 +68,7 @@ def main():
   tc.set_callback(callback)
 ```
 
-`TrackingController` runs a thread to track the ArUco tags in the background, assessing each camera frame at 30fps. Starting and stopping the thread can be done as follows
+`TrackingController` runs a thread to track the ArUco tags in the background. Starting and stopping the thread can be done as follows
 ```python
 # Start the tracking thread
 tc.start()
@@ -80,5 +80,5 @@ tc.stop()
 tc.once()
 ```
 
-### License
+## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
