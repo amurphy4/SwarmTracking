@@ -15,7 +15,10 @@ Clone/download this repository to the folder containing your project code
 
 -OR-
 
-Clone/download this repository to anywhere, then add its location to the PYTHONPATH
+Clone/download this repository to anywhere, then add its location to the PYTHONPATH in Terminal (macOS/GNU Linux)
+```bash
+export PYTHONPATH="${PYTHONPATH}:/path/to/this/repository"
+```
 
 
 ### Usage
