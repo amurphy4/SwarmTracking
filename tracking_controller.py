@@ -72,7 +72,7 @@ class TrackingController:
             bots = self.__tag_detection.detect_tags(frame, self.__tag_offset)
 
             # Trigger callback
-            self.__callback(bots)
+            self.__callback(bots, frame)
 
             # Emulate do-while loop
             if not self.__looping:

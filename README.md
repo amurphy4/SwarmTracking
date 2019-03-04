@@ -57,9 +57,9 @@ new_tc = TrackingController.getInstance()
 
 **Note: Any changes made to** `new_tc` **will also affect** `tc`
 
-`TrackingController` requires a callback method in order to return data about the bots, this can be set using the `set_callback()` method. The callback will receive a list of the [bots](objects/bot.py) found in the frame
+`TrackingController` requires a callback method in order to return data about the bots, this can be set using the `set_callback()` method. The callback will receive a list of the [bots](objects/bot.py) found in the frame, and the camera frame itself. Each bot in the list of bots contains the pixel co-ordinate of each corner of the ArUco tag, and the centre of the tag. The frame itself can be used for further image processing (e.g. OpenCV object detection)
 ```python
-def callback(bots):
+def callback(bots, frame):
   # Handle data processing here
   
 def main():
