@@ -5,7 +5,7 @@ Swarm robot tracking system - developed for use by the Swarm Lab at the Universi
 These instructions will show how to import this module and use this module
 
 ## Prerequisites
-OpenCV 4.0 is required in order to identify the ArUco tags. ArUco detection is a contrib module, and not included within base OpenCV. OpenCV Contrib can be installed through pip
+OpenCV is required in order to identify the ArUco tags. ArUco detection is a contrib module, and not included within base OpenCV. OpenCV Contrib can be installed through pip. OpenCV 4.0 is recommended, however versions 2.4 onwards should also work.
 ```
 pip install opencv-contrib-python
 ```
@@ -15,11 +15,11 @@ Clone/download this repository to the folder containing your project code
 
 -OR-
 
-Clone/download this repository to anywhere, then add its location to the PYTHONPATH in Terminal (macOS/GNU Linux)
+Clone/download this repository to anywhere, then run the `setup.py` file in Terminal (macOS/GNU Linux)
 ```bash
-export PYTHONPATH="${PYTHONPATH}:/path/to/this/repository"
+python /path/to/repository/setup.py
 ```
-
+This will add the package to the PYTHONPATH which will let you import the modules from anywhere
 
 ## Usage
 Import the `TrackingController`
