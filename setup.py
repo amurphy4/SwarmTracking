@@ -29,7 +29,7 @@ if sys.platform == "linux" or sys.platform == "linux2":
                 # Copy file to new package folder
                 os.system("sudo cp {0}/{1} {2}".format(parent, item, folder))
 
-    print("Package has been installed at {0}".folder)
+    print("Package has been installed at {0}".format(folder))
             
 elif sys.platform == "darwin":
     # macOS
@@ -62,7 +62,7 @@ elif sys.platform == "darwin":
         os.system('echo "export PYTHONPATH=$PYTHONPATH:{0}" >> ~/.bash_profile'.format(pkg_folder))
         os.system('source ~/.bash_profile')
 
-    print("Package has been installed at {0}".folder)
+    print("Package has been installed at {0}".format(folder))
     
 elif sys.platform == "win32":
     # Windows
