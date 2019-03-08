@@ -36,6 +36,8 @@ class TrackingController:
 
         # Used to stop the tracking thread
         self.__looping = True
+		
+		self.__show_frame = False
 
     def set_callback(self, callback):
         """Set callback method to be used to return data from tracking thread"""
@@ -44,6 +46,9 @@ class TrackingController:
 
     def set_tag_offset(self, offset):
         self.__tag_offset = offset
+		
+	def set_show_frame(self, show_frame):
+		self.__show_frame = show_frame
 
     def start(self):
         """Start the tracking thread"""
@@ -77,16 +82,13 @@ class TrackingController:
             # Emulate do-while loop
             if not self.__looping:
                 break
-
-            # Display image with tag outlines & other augments - resize to fit screen
-            cv2.namedWindow("Camera", cv2.WINDOW_NORMAL)
-            cv2.resizeWindow("Camera", 1280, 720)
-
-            cv2.imshow("Camera", frame)
-
-            # Break out of loop (stop thread) when 'q' pressed
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-		break
+			
+			if self.__show_frame:
+            	# Display image with tag outlines & other augments - resize to fit screen
+	            cv2.namedWindow("Camera", cv2.WINDOW_NORMAL)
+	            cv2.resizeWindow("Camera", 1280, 720)
+	
+	            cv2.imshow("Camera", frame)
 
 ### Threading necessary to prevent the tracking function from blocking on the main thread ###
 class TrackingThread(threading.Thread):
