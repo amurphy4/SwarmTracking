@@ -39,6 +39,9 @@ class TrackingController:
 		
 	self.__show_frame = False
 
+        # Used to determine if to outline tags in the frame etc.
+	self.__augment_frame = True
+
     def set_callback(self, callback):
         """Set callback method to be used to return data from tracking thread"""
         
@@ -49,6 +52,9 @@ class TrackingController:
 		
     def set_show_frame(self, show_frame):
 	self.__show_frame = show_frame
+
+    def set_augment_frame(self, augment_frame):
+        self.__augment_frame = augment_frame
 
     def start(self):
         """Start the tracking thread"""
@@ -74,7 +80,7 @@ class TrackingController:
             frame = self.__camera.get_frame()
 
             # Get a list of bots (each ArUco tag is a bot)
-            bots = self.__tag_detection.detect_tags(frame, self.__tag_offset)
+            bots = self.__tag_detection.detect_tags(frame, self.__tag_offset, self.__augment_frame)
 
             # Trigger callback
             self.__callback(bots, frame)

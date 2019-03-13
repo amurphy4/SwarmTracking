@@ -12,7 +12,7 @@ class TagDetection:
 
         self.bots = []
 
-    def detect_tags(self, frame, offset):
+    def detect_tags(self, frame, offset, augment_frame):
         # Ensure we have a clean bot array - also keeps on top of memory usage
         del self.bots[:]
         
@@ -24,8 +24,10 @@ class TagDetection:
 
         if ids is not None:
             # Tags were found
-            # Outline tags on frame
-            aruco.drawDetectedMarkers(frame, tags, borderColor = (0, 255, 0))
+
+            if augment_frame:
+                # Outline tags on frame if augment_frame is enabled
+                aruco.drawDetectedMarkers(frame, tags, borderColor = (0, 255, 0))
 
             index = 0
             
@@ -43,10 +45,13 @@ class TagDetection:
                 self.bots.append(bot)
 
                 # Get centre of the tag
-                cX, cY = bot.get_center()
+                centre = bot.get_centre()
+                cX = centre.x
+                cY = centre.y
 
-                # Draw circle on center point
-                cv2.circle(frame, (cX, cY), 5, (0, 255, 0), -1)
+                if augment_frame:
+                    # Draw circle on center point if augment_frame is enabled
+                    cv2.circle(frame, (cX, cY), 5, (0, 255, 0), -1)
 
                 # Get corners as coordinates - easier to work with
                 tl, tr, br, bl = bot.get_corners()
@@ -55,30 +60,25 @@ class TagDetection:
                 tX = int((tl.x + tr.x) / 2)
                 tY = int((tl.y + tr.y) / 2)
 
-                radius = math.sqrt(math.pow((tX - cX), 2) + math.pow((tY - cY), 2))
-                theta = 45
+                # Translate top point around negative of centre (pivot) point
+                tX = tX - cX
+                tY = tY - cY
 
-                #offX = int(tX + radius * math.cos(math.radians(90)))
-                #offY = int(tY + radius * math.sin(math.radians(90)))
-                #offX = int(radius * math.sin(math.radians(45)))
-                #offY = int(radius * math.sin(math.radians(90 - 45)))
-                #offX = int(radius / math.cos(theta))
-                #offY = int((2 * radius * math.sin(theta / 2)) / (math.cos(((180 - theta) / 2) - 90 - theta)))
-                #offY = int(radius * math.sin(theta))
+                # Angle to rotate point by
+                theta = math.radians(offset)
+                
+                nX = int(tX * math.cos(theta) - tY * math.sin(theta))
+                nY = int(tX * math.sin(theta) + tY * math.cos(theta))
 
-                #nX = int(tX - (radius - offX))
-                #nY = int(tY + offY)
+                # Translate back
+                nX = nX + cX
+                nY = nY + cY
 
-                #print("X: {0} Y: {1} Theta: {2}".format(offX, offY, theta))
+                bot.set_front_point(nX, nY)
 
-                #a = radius
-                #b = radius
-                #c = int(2 * radius * math.sin(90 / 2))
-                #x = int((c*c - b*b + a*a) / (2*a))
-                #y = int(math.sqrt(c*c - x*x))
-
-                # Draw circle on centre of top line
-                #cv2.arrowedLine(frame, (cX, cY), (nX, nY), (0, 255, 0), 2)
+                if augment_frame:
+                    # Draw arrowed line from centre point to front of bot (shows direction of movement) if augment_frame is enabled
+                    cv2.arrowedLine(frame, (cX, cY), (nX, nY), (0, 255, 0), 2)
     
                 # Increment index for next pass through
                 index = index + 1
