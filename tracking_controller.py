@@ -90,6 +90,10 @@ class TrackingController:
 	        
 	        cv2.imshow("Camera", frame)
 
+	        if cv2.waitKey(1) & 0xFF == ord('q'):
+                    cv2.destroyAllWindows()
+                    break
+
 ### Threading necessary to prevent the tracking function from blocking on the main thread ###
 class TrackingThread(threading.Thread):
     """Thread to run the tag detection without blocking all other functionality"""
