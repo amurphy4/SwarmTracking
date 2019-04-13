@@ -41,7 +41,7 @@ class TagDetection:
                 bl = coord(corners[3][0], corners[3][1])
 
                 # Create bot instance
-                bot = Bot(tl, tr, br, bl, ids[index][0])
+                bot = Bot(tl, tr, br, bl, ids[index][0], offset)
                 self.bots.append(bot)
 
                 # Get centre of the tag
